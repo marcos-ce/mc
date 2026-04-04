@@ -1,210 +1,185 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>oi :)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Orbitron', sans-serif;
-            min-height: 100vh;
-            background: #050505;
-            color: #fff;
-            overflow-x: hidden;
-            padding-bottom: 80px;
-        }
-        body::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(2px 2px at 20% 30%, #fff, transparent), radial-gradient(2px 2px at 60% 70%, #ff69b4, transparent);
-            background-size: 200% 200%; animation: stars 60s linear infinite; z-index: -1; opacity: 0.6;
-        }
-        @keyframes stars { from {background-position: 0 0;} to {background-position: 100% 100%;} }
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; text-align: center; position: relative; z-index: 10; }
-        h1 {
-            font-size: clamp(2em, 5vw, 3.5em); margin: 30px 0 20px;
-            background: linear-gradient(90deg, #ff1493, #fff, #da70d6);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-transform: uppercase; letter-spacing: 4px; filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.6));
-        }
-        .counter-box {
-            background: rgba(20, 0, 20, 0.6); border: 1px solid #da70d6; padding: 20px;
-            border-radius: 10px; margin: 0 auto 40px; max-width: 700px;
-            box-shadow: 0 0 20px rgba(218, 112, 214, 0.2); animation: pulseGlow 3s infinite alternate;
-        }
-        @keyframes pulseGlow { from { box-shadow: 0 0 10px rgba(218, 112, 214, 0.2); } to { box-shadow: 0 0 25px rgba(255, 20, 147, 0.5); } }
-        #contador { font-size: clamp(1.2em, 3.5vw, 2em); font-weight: 700; color: #fff; text-shadow: 0 0 10px #ff69b4; line-height: 1.5; }
-        .player-wrapper {
-            background: rgba(20, 20, 20, 0.9); border: 1px solid #da70d6; padding: 20px;
-            border-radius: 15px; margin: 30px auto; max-width: 500px;
-            box-shadow: 0 0 25px rgba(148, 0, 211, 0.2); position: relative;
-        }
-        .equalizer { display: flex; justify-content: center; gap: 5px; height: 30px; margin-bottom: 15px; }
-        .bar { width: 8px; background: #ff69b4; animation: eq 0.8s ease-in-out infinite; }
-        .bar:nth-child(even) { animation-delay: 0.2s; }
-        @keyframes eq { 0%, 100% { height: 5px; opacity: 0.6; } 50% { height: 100%; opacity: 1; box-shadow: 0 0 15px #ff69b4; } }
-        .paused .bar { animation-play-state: paused; height: 5px; transition: 0.5s; }
-        .song-title { color: #ffb6c1; margin-bottom: 15px; font-size: 0.9em; letter-spacing: 1px; }
-        .controls button {
-            background: transparent; border: 1px solid #da70d6; color: white;
-            padding: 10px 20px; font-family: 'Orbitron'; cursor: pointer; transition: 0.3s; margin: 0 5px; border-radius: 5px;
-        }
-        .controls button:hover { background: #ff1493; color: black; box-shadow: 0 0 15px #ff1493; }
-        .play-main { font-size: 1.2em; border-color: #ff69b4 !important; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 50px; padding: 10px; }
-        .polaroid {
-            position: relative; background: #111; padding: 10px; border: 1px solid #333;
-            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; transform: translateY(100px) scale(0.9); filter: blur(5px);
-        }
-        .polaroid.reveal { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); border-color: #ff1493; box-shadow: 0 0 30px rgba(255, 20, 147, 0.2); }
-        .polaroid img { width: 100%; height: 350px; object-fit: cover; filter: grayscale(80%); transition: 0.5s; }
-        .polaroid:hover img { filter: grayscale(0%); transform: scale(1.03); }
-        .polaroid img.error { padding: 50px; object-fit: contain; opacity: 0.3; }
-        #playlistDados { display: none; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><!-- Título da Página --></title>
 
-       
-        .kuromi-corner {
-            position: fixed;
-            bottom: 0px; 
-            right: 0px; 
-            width: 150px; 
-            z-index: 50; 
-            pointer-events: none;
-       
-            image-rendering: -webkit-optimize-contrast;
-        }
-        @media (max-width: 600px) { .kuromi-corner { width: 120px; } }
-    </style>
+  <!-- Tailwind via CDN para prototipagem rápida. Remova se for usar build próprio. -->
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+  <!-- Variáveis de Tema → Mude aqui para customizar todo o site -->
+  <style>
+    :root{
+      --cor-base:#ff69b4;
+      --cor-base-dark:#c6538e;
+      --cor-fundo:#050505;
+      --fonte-display:'Orbitron', sans-serif;
+    }    
+    body{font-family:var(--fonte-display);background:var(--cor-fundo);color:white;min-height:100dvh;}
+    /* Estrelas de fundo – opcional */
+    body::before{
+      content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+      background-image:radial-gradient(2px 2px at 20% 30%,#fff 80%,transparent),
+                       radial-gradient(2px 2px at 60% 70%,var(--cor-base) 80%,transparent);
+      background-size:200% 200%;
+      animation:stars 60s linear infinite;
+      opacity:.4;
+    }
+    @keyframes stars{from{background-position:0 0}to{background-position:100% 100%}}
+
+    /* Equalizador */
+    @keyframes eq{0%,100%{height:6px;opacity:.5}50%{height:100%;opacity:1}}
+  </style>
+
+  <!-- Pré‑carrega fonte Orbitron Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
 </head>
-<body>
+<body class="flex flex-col items-center px-4 pb-32 space-y-16">
 
-    <img src="https://media.tenor.com/zixpOZAH5b0AAAAj/kuromi-hello-kitty.gif" 
-         class="kuromi-corner" 
-         alt="Kuromi">
+  <!-- Header/Hero ----------------------------------------------------------->
+  <header class="text-center pt-16" id="topo">
+    <h1 class="text-4xl md:text-6xl font-black tracking-widest bg-gradient-to-r from-pink-500 via-white to-fuchsia-400 bg-clip-text text-transparent select-none drop-shadow-lg">
+      <!-- Headline aqui -->
+      Meu Template Profissional 🚀
+    </h1>
+    <p id="contador" class="mt-4 text-lg md:text-2xl text-pink-200"></p>
+  </header>
 
-    <div class="container">
-        <h1></h1>
+  <!-- Player ----------------------------------------------------------------->
+  <section aria-labelledby="titulo-player" class="w-full max-w-md bg-black/40 backdrop-blur rounded-xl shadow-lg p-6 border border-pink-700/50">
+    <h2 id="titulo-player" class="sr-only">Player de Áudio</h2>
 
-        <div class="counter-box">
-            <div id="contador">Calculando...</div>
-        </div>
-        
-        <ul id="playlistDados">
-            
-            <li data-src="https://cdn.discordapp.com/attachments/1460993143641083987/1461002567155843278/Dom_Quixote_-_Engenheiros_do_Hawaii_youtube.mp3?ex=6968f82c&is=6967a6ac&hm=c09d445ebb7d42522c8dc5f56d59c3784889c7513f077b7fed2801dd1d57810c&">Dom Quixote</li>
-            <li data-src="https://cdn.discordapp.com/attachments/1460993143641083987/1461002027655102600/musica.mp3.mp3?ex=6968f7ab&is=6967a62b&hm=3086f240b75785134dec7d1c0a0e687ead1e6488c2faff101e14877fed2b8b35&">Always</li>
-             <li data-src="https://cdn.discordapp.com/attachments/1460993143641083987/1460993232283504660/Fallen_Star.mp3?ex=6968ef7a&is=69679dfa&hm=335d218eccbc491cd759a77324fbd575ae74a2f8b556b83c2aceb5cffd3ccafc&">Fallen Star</li>
-        </ul>
-
-        <div class="player-wrapper paused" id="visualizer">
-            <div class="equalizer">
-                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-            </div>
-            <div class="song-title" id="displayTitulo">Carregando...</div>
-            <audio id="playerAudio" preload="auto"></audio>
-            <div class="controls">
-                <button onclick="mudarFaixa(-1)">⏮</button>
-                <button onclick="togglePlay()" class="play-main" id="btnPlay">▶</button>
-                <button onclick="mudarFaixa(1)">⏭</button>
-            </div>
-        </div>
-
-        <p style="margin-top:20px; color:#666; font-size:0.8em;">Até pode ser que os dragões sejam moinhos de vento...</p>
-
-        <div class="gallery-grid">
-            <div class="polaroid"><img src="mc/mc/foto1" onerror="erroImg(this)"></div>
-            <div class="polaroid"><img src="mc/mc/foto4" onerror="erroImg(this)"></div>
-            <div class="polaroid"><img src="mc/mc/foto8" onerror="erroImg(this)"></div>
-            <div class="polaroid"><img src="mc/mc/foto2" onerror="erroImg(this)"></div>
-            <div class="polaroid"><img src="mc/mc/foto3" onerror="erroImg(this)"></div>
-            <div class="polaroid"><img src="mc/mc/foto7" onerror="erroImg(this)"></div>
-            <div class="polaroid"><img src="mc/mc/foto5" onerror="erroImg(this)"></div>
-            <div class="polaroid"><img src="mc/mc/foto6" onerror="erroImg(this)"></div>
-        </div>
-
-        <div style="margin-top: 80px; opacity: 0.6; font-size: 0.8em;">Te amo, Mozilla &hearts;</div>
+    <!-- Equalizador animado -->
+    <div id="eq" class="flex justify-center gap-1 h-8 mb-3 aria-paused:opacity-40" aria-live="polite">
+      <template id="tpl-bar"><div class="w-1 bg-pink-400 animate-[eq_1s_ease-in-out_infinite]"></div></template>
     </div>
 
-    <script>
-        const dataInicial = new Date(2025, 4, 14); 
+    <!-- Meta da faixa -->
+    <p id="displayTitulo" class="text-center text-sm uppercase tracking-wide text-pink-300 mb-4">---</p>
 
-        function atualizarContador() {
-            const agora = new Date();
-            const diferenca = agora - dataInicial;
-            if (diferenca < 0) {
-                document.getElementById('contador').innerText = "Em breve...";
-            } else {
-                const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-                const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
-                const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
-                document.getElementById('contador').innerText = `${dias} dias ${horas} horas ${minutos} min e ${segundos} seg`;
-            }
-        }
-        setInterval(atualizarContador, 1000);
-        atualizarContador(); 
+    <!-- Controles -->
+    <div class="flex justify-center gap-3">
+      <button data-action="prev" class="btn">⏮</button>
+      <button data-action="toggle" class="btn font-bold px-6">▶</button>
+      <button data-action="next" class="btn">⏭</button>
+    </div>
 
-        const listaHTML = document.querySelectorAll('#playlistDados li');
-        const playlist = [];
-        listaHTML.forEach(item => {
-            playlist.push({ src: item.getAttribute('data-src'), nome: item.innerText });
-        });
-        let indexAtual = 0;
-        const audio = document.getElementById('playerAudio');
-        const displayTitulo = document.getElementById('displayTitulo');
-        const visualizer = document.getElementById('visualizer');
-        const btnPlay = document.getElementById('btnPlay');
+    <audio id="playerAudio" preload="auto" hidden></audio>
+  </section>
 
-        if(playlist.length > 0) { carregarMusica(0); }
+  <!-- Galeria ---------------------------------------------------------------->
+  <section id="galeria" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl w-full" aria-labelledby="titulo-galeria">
+    <h2 id="titulo-galeria" class="sr-only">Galeria</h2>
+    <!-- Use qualquer imagem 350×350 ou maior -->
+    <template id="tpl-img">
+      <figure class="relative overflow-hidden rounded-lg shadow-md bg-slate-800">
+        <img src="" alt="Imagem da galeria" class="w-full h-72 object-cover grayscale hover:grayscale-0 transition duration-300" loading="lazy"/>
+      </figure>
+    </template>
+  </section>
 
-        function carregarMusica(index) {
-            if (index < 0) index = playlist.length - 1;
-            if (index >= playlist.length) index = 0;
-            indexAtual = index;
-            audio.src = playlist[indexAtual].src;
-            displayTitulo.innerText = `${playlist[indexAtual].nome}`;
-        }
+  <footer class="mt-16 text-xs text-pink-200 opacity-80 leading-relaxed text-center">
+    Baseado em&nbsp;<a href="https://tailwindcss.com" class="underline">TailwindCSS</a>. Te amo, Mozilla ♥
+  </footer>
 
-        function togglePlay() {
-            if (audio.paused) {
-                const promessa = audio.play();
-                if (promessa !== undefined) {
-                    promessa.then(() => {
-                        visualizer.classList.remove('paused');
-                        btnPlay.innerText = "⏸";
-                    }).catch(erro => {
-                        console.error("Erro:", erro);
-                        alert(`ERRO: Não consegui acessar: ${playlist[indexAtual].src}`);
-                    });
-                }
-            } else {
-                audio.pause(); visualizer.classList.add('paused'); btnPlay.innerText = "▶ Tocar";
-            }
-        }
-        function mudarFaixa(direcao) { carregarMusica(indexAtual + direcao); togglePlay(); }
-        audio.addEventListener('ended', () => mudarFaixa(1));
+  <!-- Playlist em JSON para facilitar manutenção -->
+  <script type="application/json" id="playlist-data">
+    [
+      { "src":"https://cdn.example.com/audio/dom_quixote.mp3", "nome":"Dom\u00a0Quixote" },
+      { "src":"https://cdn.example.com/audio/always.mp3", "nome":"Always" },
+      { "src":"https://cdn.example.com/audio/fallen_star.mp3", "nome":"Fallen\u00a0Star" }
+    ]
+  </script>
 
-        const observador = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('reveal');
-                else entry.target.classList.remove('reveal');
-            });
-        }, { threshold: 0.15 });
-        document.querySelectorAll('.polaroid').forEach(el => observador.observe(el));
+  <!-- JavaScript modular ----------------------------------------------------->
+  <script>
+  (()=>{
+    /* ===== Utilitários ===== */
+    const qs = (sel,el=document)=>el.querySelector(sel);
+    const create = (tag,props={})=>Object.assign(document.createElement(tag),props);
 
-        function erroImg(img) {
-            img.onerror = ""; img.src = "https://placehold.co/400x400/202020/ff69b4?text=Imagem+Quebrada"; img.classList.add('error');
-        }
+    /* ===== Countdown ===== */
+    const inicio = new Date(2025,4,14);
+    const elContador = qs('#contador');
+    const fmt = n => String(n).padStart(2,'0');
+    function tick(){
+      const diff = Date.now()-inicio;
+      if(diff<0){elContador.textContent='Em breve...';return;}
+      const s = Math.floor(diff/1000);
+      const dias = Math.floor(s/86400);
+      const horas = Math.floor((s%86400)/3600);
+      const min = Math.floor((s%3600)/60);
+      const seg = s%60;
+      elContador.textContent = `${dias}d ${fmt(horas)}h ${fmt(min)}m ${fmt(seg)}s`;
+      requestAnimationFrame(tick);
+    }
+    tick();
 
-        document.body.addEventListener('click', () => {
-            
-            if (audio.paused) {
-                togglePlay();
-            }
-        }, { once: true }); 
-    </script>
+    /* ===== Player ===== */
+    const audio = qs('#playerAudio');
+    const data = JSON.parse(qs('#playlist-data').textContent);
+    let idx = 0;
+
+    // Clona equalizador
+    const eq = qs('#eq');
+    for(let i=0;i<9;i++)eq.append(qs('#tpl-bar').content.cloneNode(true));
+
+    const btns = {
+      prev: qs('[data-action="prev"]'),
+      toggle: qs('[data-action="toggle"]'),
+      next: qs('[data-action="next"]')
+    };
+    const elTitulo = qs('#displayTitulo');
+
+    function carrega(i){
+      idx = (i+data.length)%data.length;
+      const faixa = data[idx];
+      audio.src = faixa.src;
+      elTitulo.innerHTML = faixa.nome;
+    }
+    carrega(0);
+
+    function playPause(force){
+      if(force==='pause' || (!force && !audio.paused)){
+        audio.pause();btns.toggle.textContent='▶';eq.dataset.paused='';
+      }else{
+        audio.play().catch(()=>alert('Erro ao tocar a faixa.'));btns.toggle.textContent='⏸';eq.removeAttribute('data-paused');
+      }
+    }
+
+    btns.prev.onclick = ()=>{carrega(idx-1);playPause('play');};
+    btns.next.onclick = ()=>{carrega(idx+1);playPause('play');};
+    btns.toggle.onclick = ()=>playPause();
+
+    audio.onended = ()=>btns.next.onclick();
+
+    /* ===== Galeria ===== */
+    const galeria = qs('#galeria');
+    const imagens = [
+      'https://placehold.co/400x400/202020/ff69b4?text=1',
+      'https://placehold.co/400x400/202020/ff69b4?text=2',
+      'https://placehold.co/400x400/202020/ff69b4?text=3',
+      'https://placehold.co/400x400/202020/ff69b4?text=4',
+      'https://placehold.co/400x400/202020/ff69b4?text=5',
+      'https://placehold.co/400x400/202020/ff69b4?text=6'
+    ];
+    const tplImg = qs('#tpl-img').content;
+    imagens.forEach(src=>{
+      const fig = tplImg.cloneNode(true);
+      fig.querySelector('img').src = src;
+      galeria.append(fig);
+    });
+  })();
+  </script>
+
+  <!-- Acessibilidade: permite Play ao 1º clique na página em browsers que bloqueiam autoplay -->
+  <script>
+    document.addEventListener('click',e=>{
+      const audio = document.querySelector('#playerAudio');
+      if(audio && audio.paused){audio.play().catch(()=>{});}
+    },{once:true});
+  </script>
 </body>
 </html>
