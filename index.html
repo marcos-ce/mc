@@ -622,31 +622,34 @@
         // ==========================================
         // 3. SISTEMA DE POP-UP DE DOAÇÃO SIMULADA
         // ==========================================
+      // ==========================================
+        // 3. SISTEMA DE POP-UP DE DOAÇÃO SIMULADA
+        // ==========================================
         const listaDoacoes = [
             { nome: "Mário", valor: "R$ 5,00" },
-    { nome: "Ana", valor: "R$ 10,00" },
-    { nome: "Cláudia", valor: "R$ 20,00" },
-    { nome: "Roberto", valor: "R$ 5,00" },
-    { nome: "Juliana", valor: "R$ 50,00" },
-    { nome: "Maria", valor: "R$ 10,00" },
-    { nome: "Nabucodonosor", valor: "R$ 175,12" },
-    { nome: "Lucas", valor: "R$ 5,00" },
-    { nome: "João", valor: "R$ 5,00" },
-    { nome: "Beatriz", valor: "R$ 10,00" },
-    { nome: "Carlos", valor: "R$ 20,00" },
-    { nome: "Camila", valor: "R$ 5,00" },
-    { nome: "Rafael", valor: "R$ 50,00" },
-    { nome: "Patrícia", valor: "R$ 10,00" },
-    { nome: "Diego", valor: "R$ 15,00" },
-    { nome: "Letícia", valor: "R$ 2,00" },
-    { nome: "Pedro", valor: "R$ 5,00" },
-    { nome: "Sofia", valor: "R$ 10,00" },
-    { nome: "Marcelo", valor: "R$ 20,00" },
-    { nome: "Amanda", valor: "R$ 5,00" },
-    { nome: "Thiago", valor: "R$ 50,00" },
-    { nome: "Gabriela", valor: "R$ 10,00" },
-    { nome: "Bruno", valor: "R$ 15,00" },
-    { nome: "Aline", valor: "R$ 5,00" }
+            { nome: "Ana", valor: "R$ 10,00" },
+            { nome: "Cláudia", valor: "R$ 20,00" },
+            { nome: "Nabucodonosor", valor: "R$ 205,60" },
+            { nome: "Juliana", valor: "R$ 50,00" },
+            { nome: "Maria", valor: "R$ 11,54" },
+            { nome: "Fernanda", valor: "R$ 15,00" },
+            { nome: "Lucas", valor: "R$ 5,00" },
+            { nome: "João", valor: "R$ 5,00" },
+            { nome: "Beatriz", valor: "R$ 10,00" },
+            { nome: "Carlos", valor: "R$ 20,00" },
+            { nome: "Camila", valor: "R$ 5,00" },
+            { nome: "Rafael", valor: "R$ 50,00" },
+            { nome: "Patrícia", valor: "R$ 10,00" },
+            { nome: "Diego", valor: "R$ 15,00" },
+            { nome: "Letícia", valor: "R$ 5,00" },
+            { nome: "Pedro", valor: "R$ 5,00" },
+            { nome: "Sofia", valor: "R$ 10,00" },
+            { nome: "Marcelo", valor: "R$ 20,00" },
+            { nome: "Amanda", valor: "R$ 5,00" },
+            { nome: "Thiago", valor: "R$ 50,00" },
+            { nome: "Gabriela", valor: "R$ 10,00" },
+            { nome: "Bruno", valor: "R$ 15,00" },
+            { nome: "Aline", valor: "R$ 5,00" }
         ];
 
         const popup = document.getElementById('donationPopup');
@@ -655,13 +658,31 @@
 
         function exibirNotificacaoDoacao() {
             if (!popup) return;
+
+            // TRAVA LÓGICA DE ALTA PRECISÃO: Lista de todos os modais da aplicação
+            const modaisParaVerificar = [
+                'videoModal', 
+                'pixModal', 
+                'coffeeModal', 
+                'certificateModal', 
+                'progressModal'
+            ];
+            
+            // Varredura: verifica se algum modal está ativo/visível na tela
+            for (let i = 0; i < modaisParaVerificar.length; i++) {
+                const modal = document.getElementById(modaisParaVerificar[i]);
+                // Se o modal existir no HTML e não estiver oculto, bloqueia o pop-up
+                if (modal && window.getComputedStyle(modal).display !== 'none') {
+                    return; 
+                }
+            }
             
             // Seleciona um item aleatório da lista
             const doacaoAleatoria = listaDoacoes[Math.floor(Math.random() * listaDoacoes.length)];
             
             // Atualiza o texto do pop-up
-            if(elemNome) elemNome.innerText = doacaoAleatoria.nome;
-            if(elemValor) elemValor.innerText = doacaoAleatoria.valor;
+            if (elemNome) elemNome.innerText = doacaoAleatoria.nome;
+            if (elemValor) elemValor.innerText = doacaoAleatoria.valor;
             
             // Mostra o pop-up removendo a classe 'hidden'
             popup.classList.remove('hidden');
@@ -676,7 +697,7 @@
         setTimeout(() => {
             exibirNotificacaoDoacao();
             setInterval(exibirNotificacaoDoacao, 25000); // 25000ms = 25 segundos
-        }, 10000); 
+        }, 10000);
 
     });
     </script>
