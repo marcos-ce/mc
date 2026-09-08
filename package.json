@@ -1,0 +1,10 @@
+{
+  "name": "mc-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "node --check assets/js/main.js",
+    "test": "node scripts/validate.mjs",
+    "validate": "npm run lint && npm test"
+  }
+}
